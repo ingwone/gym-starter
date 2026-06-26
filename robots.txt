@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://your-domain.pages.dev/sitemap.xml
+Sitemap: https://gym-starter.pages.dev/sitemap.xml
