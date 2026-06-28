@@ -110,7 +110,7 @@ const MUSCLES = {
   trap: (p='primary', op=0.8) => {
     const c = p==='primary' ? PRIMARY : SECONDARY;
     const s = p==='primary' ? PRIMARY_STROKE : SECONDARY_STROKE;
-    return `<path d="M-20,52 C-28,56 -34,62 -30,70 C-22,66 -10,64 0,64 C10,64 22,66 30,70 C34,62 28,56 20,52 C12,49 6,48 0,48 C-6,48 -12,49 -20,52Z" fill="${c}" fill-opacity="${op}" stroke="${s}" stroke-width="0.8"/>`,
+    return `<path d="M-20,52 C-28,56 -34,62 -30,70 C-22,66 -10,64 0,64 C10,64 22,66 30,70 C34,62 28,56 20,52 C12,49 6,48 0,48 C-6,48 -12,49 -20,52Z" fill="${c}" fill-opacity="${op}" stroke="${s}" stroke-width="0.8"/>`;
   },
   glute: (p='primary', op=0.85) => {
     const c = p==='primary' ? PRIMARY : SECONDARY;
