@@ -615,6 +615,23 @@ img { max-width: 100%; display: block; }
   font-size: 48px;
   opacity: 0.5;
 }
+.ex-thumb-diagram {
+  aspect-ratio: auto;
+  padding: 8px 4px 4px;
+  background: var(--gray-50);
+}
+.ex-thumb-diagram svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.modal-thumb svg {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
 
 .ex-body {
   padding: 14px 16px 16px;
