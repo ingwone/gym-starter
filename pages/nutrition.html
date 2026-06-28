@@ -4,41 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>영양 가이드 — 헬린이 가이드</title>
-  <meta name="description" content="벌크업·다이어트·유지별 영양 가이드. 영양제 AIS 등급 정리, 혈당 관리, 탄수화물 진실, 목표별 외식 가이드." />
+  <meta name="description" content="벌크업·다이어트·유지별 영양 가이드. 영양제 AIS 등급 정리, 혈당 관리, 탄수화물 선택법, 목표별 외식 가이드." />
   <link rel="stylesheet" href="../css/style.css" />
   <style>
-    /* 목표 탭 */
     .goal-tabs { display:flex; gap:8px; margin:20px 0; flex-wrap:wrap; }
-    .goal-tab {
-      padding:8px 20px; border-radius:20px; border:2px solid var(--gray-200);
-      background:var(--white); font-size:14px; font-weight:600; cursor:pointer;
-      color:var(--gray-600); transition:all 0.2s;
-    }
+    .goal-tab { padding:8px 20px; border-radius:20px; border:2px solid var(--gray-200); background:var(--white); font-size:14px; font-weight:600; cursor:pointer; color:var(--gray-600); transition:all 0.2s; }
     .goal-tab.active { border-color:var(--black); background:var(--black); color:var(--white); }
     .goal-content { display:none; }
     .goal-content.active { display:block; }
 
-    /* AIS 배지 */
     .ais-badge { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:700; }
     .ais-a { background:#d1fae5; color:#065f46; }
     .ais-b { background:#dbeafe; color:#1e40af; }
     .ais-c { background:#fef9c3; color:#854d0e; }
 
-    /* 영양제 카드 */
     .supp-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; margin-top:16px; }
     .supp-card { background:var(--white); border:1px solid var(--gray-100); border-radius:12px; padding:18px; }
     .supp-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
     .supp-name { font-size:15px; font-weight:700; color:var(--gray-900); }
     .supp-verdict { font-size:13px; color:var(--gray-600); line-height:1.6; margin-bottom:12px; }
     .supp-verdict strong { color:var(--gray-900); }
-    .supp-link {
-      display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600;
-      color:#16a34a; background:#f0fdf4; border:1px solid #bbf7d0;
-      border-radius:8px; padding:5px 12px; text-decoration:none;
-    }
+    .supp-link { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:#16a34a; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:5px 12px; text-decoration:none; }
     .supp-skip { font-size:12px; color:#dc2626; background:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:5px 12px; display:inline-block; }
 
-    /* 탄수화물 표 */
     .carb-table { width:100%; border-collapse:collapse; margin-top:16px; font-size:13px; }
     .carb-table th { background:var(--gray-50); padding:10px 12px; text-align:left; font-weight:600; color:var(--gray-700); border-bottom:2px solid var(--gray-200); }
     .carb-table td { padding:9px 12px; border-bottom:1px solid var(--gray-100); color:var(--gray-700); }
@@ -46,19 +34,13 @@
     .bad { color:#dc2626; font-weight:600; }
     .caution { color:#d97706; font-weight:600; }
 
-    /* 타이밍 */
     .timing-list { list-style:none; padding:0; margin-top:16px; display:flex; flex-direction:column; gap:10px; }
     .timing-item { display:flex; gap:14px; align-items:flex-start; background:var(--white); border:1px solid var(--gray-100); border-radius:10px; padding:14px 16px; }
     .timing-when { font-size:12px; font-weight:700; color:var(--gray-500); min-width:80px; padding-top:2px; }
     .timing-what { font-size:13px; color:var(--gray-800); line-height:1.6; }
 
-    /* 외식 서브탭 */
     .eat-subtabs { display:flex; gap:6px; margin:16px 0; flex-wrap:wrap; }
-    .eat-subtab {
-      padding:6px 14px; border-radius:16px; border:1px solid var(--gray-200);
-      background:var(--white); font-size:12px; font-weight:600; cursor:pointer;
-      color:var(--gray-500); transition:all 0.2s;
-    }
+    .eat-subtab { padding:6px 14px; border-radius:16px; border:1px solid var(--gray-200); background:var(--white); font-size:12px; font-weight:600; cursor:pointer; color:var(--gray-500); transition:all 0.2s; }
     .eat-subtab.active { border-color:var(--gray-700); background:var(--gray-700); color:var(--white); }
     .eat-panel { display:none; }
     .eat-panel.active { display:block; }
@@ -66,9 +48,13 @@
     .eat-card { background:var(--white); border:1px solid var(--gray-100); border-radius:10px; padding:16px; }
     .eat-title { font-size:14px; font-weight:700; color:var(--gray-900); margin-bottom:6px; }
     .eat-tip { font-size:13px; color:var(--gray-600); line-height:1.6; }
-    .tip-label { display:inline-block; font-size:11px; font-weight:700; background:var(--gray-100); color:var(--gray-600); border-radius:6px; padding:2px 7px; margin-bottom:5px; }
 
     .notice-box { background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:14px 16px; font-size:13px; color:#78350f; margin-top:16px; }
+    .info-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; margin-top:16px; }
+    .info-card { background:var(--white); border:1px solid var(--gray-100); border-radius:12px; padding:18px; }
+    .info-icon { font-size:22px; margin-bottom:8px; display:block; }
+    .info-title { font-size:14px; font-weight:700; color:var(--gray-900); margin-bottom:6px; }
+    .info-desc { font-size:13px; color:var(--gray-600); line-height:1.6; }
   </style>
 </head>
 <body>
@@ -96,7 +82,7 @@
     <div class="inner">
       <p class="page-eyebrow">AIS 근거 기반 · 솔직한 평가</p>
       <h1 class="page-title">영양 가이드</h1>
-      <p class="page-desc">목표에 맞는 영양제, 혈당 관리의 핵심,<br>벌크업·다이어트·유지별 외식 전략까지.</p>
+      <p class="page-desc">목표에 맞는 영양제, 탄수화물의 진실,<br>벌크업·다이어트·유지별 외식 전략까지.</p>
     </div>
   </section>
 
@@ -105,6 +91,7 @@
       <a href="#supplements" class="tab-btn">영양제</a>
       <a href="#blood-sugar" class="tab-btn">혈당 관리</a>
       <a href="#carbs" class="tab-btn">탄수화물</a>
+      <a href="#protein" class="tab-btn">단백질</a>
       <a href="#timing" class="tab-btn">섭취 타이밍</a>
       <a href="#eat-out" class="tab-btn">외식 가이드</a>
     </div>
@@ -121,11 +108,10 @@
 
       <div class="answer-box" style="margin-bottom:20px;">
         <span class="ais-badge ais-a">A</span> 효과 확실 &nbsp;
-        <span class="ais-badge ais-b">B</span> 연구 중, 사람마다 다름 &nbsp;
+        <span class="ais-badge ais-b">B</span> 사람마다 다름 &nbsp;
         <span class="ais-badge ais-c">C</span> 근거 부족 — 굳이 살 필요 없음
       </div>
 
-      <!-- 목표 탭 -->
       <div class="goal-tabs">
         <button class="goal-tab active" onclick="switchGoal('supp','all')">전체</button>
         <button class="goal-tab" onclick="switchGoal('supp','bulk')">💪 벌크업</button>
@@ -133,117 +119,128 @@
         <button class="goal-tab" onclick="switchGoal('supp','maintain')">⚖️ 유지</button>
       </div>
 
+      <!-- 전체 -->
       <div id="supp-all" class="goal-content active">
-        <h3 style="font-size:15px;font-weight:700;margin-bottom:12px;color:var(--gray-900)">✅ 효과 확실 (AIS 그룹 A)</h3>
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:12px;">✅ 효과 확실 (AIS 그룹 A)</h3>
         <div class="supp-grid">
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">크레아틴</span><span class="ais-badge ais-a">A</span></div>
-            <p class="supp-verdict">헬스 영양제 중 가장 연구가 많고 효과가 확실. 근력·순발력과 근육량 증가에 직접 기여. 하루 3~5g, 로딩 불필요. <strong>목표 무관하게 1순위.</strong></p>
+            <p class="supp-verdict">헬스 영양제 중 가장 연구가 많고 효과가 확실합니다. 근력·순발력과 근육량 증가에 직접 기여. 하루 3~5g, 로딩 불필요. <strong>목표 무관하게 1순위.</strong></p>
             <a class="supp-link" href="https://www.iherb.com/c/creatine" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">단백질 보충제</span><span class="ais-badge ais-a">A</span></div>
-            <p class="supp-verdict">음식으로 단백질을 못 채울 때 보조 수단. 하루 체중 1kg당 1.6~2g이 목표. 하루 총량이 타이밍보다 중요.</p>
+            <p class="supp-verdict">음식으로 단백질을 못 채울 때 보조 수단. 목표는 하루 체중 1kg당 1.6~2g. 타이밍보다 하루 총량이 더 중요합니다.</p>
             <a class="supp-link" href="https://www.iherb.com/c/whey-protein" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">카페인</span><span class="ais-badge ais-a">A</span></div>
-            <p class="supp-verdict">운동 퍼포먼스 향상. 운동 30~45분 전 200mg 내외. 내성 생기면 쉬어주는 게 좋아요. <strong>아메리카노 2잔으로 충분.</strong></p>
-            <span class="supp-skip">☕ 커피로 대체 가능</span>
+            <p class="supp-verdict">운동 퍼포먼스 향상에 가장 검증된 성분. 운동 30~45분 전 200mg 내외. 내성이 생기면 주기적으로 쉬어주는 게 좋아요.</p>
+            <span class="supp-skip">☕ 아메리카노로 충분</span>
+          </div>
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">베타알라닌</span><span class="ais-badge ais-a">A</span></div>
+            <p class="supp-verdict">고강도 지구력 운동에 효과. 섭취 후 따끔거리는 느낌(파레스테시아)은 정상입니다. 초보보다는 운동량이 많아진 뒤에 체감.</p>
+            <a class="supp-link" href="https://www.iherb.com/c/beta-alanine" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
         </div>
-        <h3 style="font-size:15px;font-weight:700;margin:24px 0 12px;color:var(--gray-900)">🔵 사람마다 달라요 (AIS 그룹 B)</h3>
+
+        <h3 style="font-size:15px;font-weight:700;margin:24px 0 12px;">🔵 사람마다 달라요 (AIS 그룹 B)</h3>
         <div class="supp-grid">
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">비타민 D</span><span class="ais-badge ais-b">B</span></div>
-            <p class="supp-verdict">실내 운동 위주라면 결핍되기 쉬움. 근력·면역·수면 모두 관여. 결핍 시 보충 효과 확실. 혈액 검사 후 복용 권장.</p>
+            <p class="supp-verdict">실내 운동 위주라면 결핍되기 쉬움. 근력·면역·수면 모두에 관여. 결핍 상태라면 보충 효과가 확실합니다. 혈액 검사 후 복용 권장.</p>
             <a class="supp-link" href="https://www.iherb.com/c/vitamin-d" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">마그네슘</span><span class="ais-badge ais-b">B</span></div>
-            <p class="supp-verdict">수면 질 개선, 근육 경련 완화. 운동량 많으면 부족해지기 쉬움. 취침 30분 전 복용 효과적. 글리시네이트 형태가 흡수 좋아요.</p>
+            <p class="supp-verdict">수면 질 개선, 근육 경련 완화. 운동량이 많으면 소모가 빨라 부족해지기 쉬움. 취침 30분 전 복용이 효과적.</p>
             <a class="supp-link" href="https://www.iherb.com/c/magnesium" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">오메가3</span><span class="ais-badge ais-b">B</span></div>
-            <p class="supp-verdict">염증 완화, 운동 후 회복 보조. 고등어·연어를 주 2회 이상 먹는다면 굳이 따로 안 먹어도 됩니다.</p>
+            <p class="supp-verdict">염증 완화, 운동 후 회복 보조. 등 푸른 생선을 주 2회 이상 먹는다면 굳이 따로 먹지 않아도 됩니다.</p>
             <a class="supp-link" href="https://www.iherb.com/c/fish-oil" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
         </div>
-        <h3 style="font-size:15px;font-weight:700;margin:24px 0 12px;color:var(--gray-900)">🚫 굳이 살 필요 없어요 (AIS 그룹 C)</h3>
+
+        <h3 style="font-size:15px;font-weight:700;margin:24px 0 12px;">🚫 굳이 살 필요 없어요 (AIS 그룹 C)</h3>
         <div class="supp-grid">
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">BCAA</span><span class="ais-badge ais-c">C</span></div>
-            <p class="supp-verdict">단백질을 충분히 먹는다면 BCAA는 비싼 단백질에 불과. 공복 유산소를 매우 자주 하는 경우가 아니면 돈 낭비.</p>
+            <p class="supp-verdict">단백질을 충분히 먹는다면 BCAA는 비싼 단백질에 불과합니다. 공복 유산소를 매우 자주 하는 경우가 아니면 돈 낭비.</p>
             <span class="supp-skip">단백질로 대체 가능</span>
           </div>
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">아르기닌 · 글루타민</span><span class="ais-badge ais-c">C</span></div>
-            <p class="supp-verdict">펌핑감은 있지만 실제 근성장·회복과의 연관성은 근거 약함. 마케팅 문구에 자주 등장하는 성분들.</p>
+            <p class="supp-verdict">펌핑감은 있지만 실제 근성장·회복과의 연관성 근거가 약합니다. 광고에서 자주 등장하지만 일반인에게는 효과가 미미해요.</p>
             <span class="supp-skip">효과 근거 부족</span>
           </div>
         </div>
       </div>
 
+      <!-- 벌크업 -->
       <div id="supp-bulk" class="goal-content">
-        <div class="answer-box" style="margin-bottom:16px;">💪 <strong>벌크업 우선순위:</strong> 크레아틴 → 단백질 → 카페인 → 베타알라닌 순으로 도입하세요.</div>
+        <div class="answer-box" style="margin-bottom:16px;">💪 <strong>벌크업 우선순위:</strong> 크레아틴 → 단백질 보충제 → 카페인 → 베타알라닌 순으로 도입하세요.</div>
         <div class="supp-grid">
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">크레아틴</span><span class="ais-badge ais-a">A</span></div>
-            <p class="supp-verdict">벌크업 시 가장 효과적. 근육에 수분을 머금게 해 볼륨감 + 실제 근력 향상. 하루 5g 꾸준히.</p>
+            <p class="supp-verdict">근육에 수분을 머금게 해 볼륨감과 실제 근력을 동시에 높여줍니다. 벌크업 중 가장 효과적. 하루 5g 꾸준히.</p>
             <a class="supp-link" href="https://www.iherb.com/c/creatine" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">단백질 보충제</span><span class="ais-badge ais-a">A</span></div>
-            <p class="supp-verdict">벌크업 시 단백질 목표량(체중×2g)을 음식으로만 채우기 어려움. 운동 후 쉐이크 1스쿱으로 보조.</p>
+            <p class="supp-verdict">벌크업 시 단백질 목표량(체중×2g)을 음식만으로 채우기 어렵습니다. 운동 후 쉐이크 1스쿱으로 보조.</p>
             <a class="supp-link" href="https://www.iherb.com/c/whey-protein" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">베타알라닌</span><span class="ais-badge ais-a">A</span></div>
-            <p class="supp-verdict">고반복 세트를 많이 하는 벌크업에 효과적. 마지막 세트 버티는 힘을 늘려줌. 따끔거리는 느낌은 정상.</p>
+            <p class="supp-verdict">고반복 세트 위주의 벌크업 훈련에 효과적. 마지막 세트를 버티는 힘을 늘려줍니다.</p>
             <a class="supp-link" href="https://www.iherb.com/c/beta-alanine" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
         </div>
       </div>
 
+      <!-- 다이어트 -->
       <div id="supp-cut" class="goal-content">
-        <div class="answer-box" style="margin-bottom:16px;">🔥 <strong>다이어트 우선순위:</strong> 단백질(근손실 방지) → 카페인(지방연소) → 크레아틴(근력 유지) 순. 행사 3~4일 전 크레아틴은 잠시 중단하면 수분이 빠져 선명도 올라감.</div>
+        <div class="answer-box" style="margin-bottom:16px;">🔥 <strong>다이어트 우선순위:</strong> 단백질(근손실 방지) → 카페인(지방 연소) → 크레아틴(근력 유지) 순. 행사·사진 촬영 3~4일 전에는 크레아틴을 잠시 중단하면 수분이 빠지면서 선명도가 올라갑니다.</div>
         <div class="supp-grid">
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">단백질 보충제</span><span class="ais-badge ais-a">A</span></div>
-            <p class="supp-verdict">다이어트 중 가장 중요. 칼로리를 줄여도 단백질은 줄이면 안 됨. 근손실 없이 체지방만 빼려면 단백질이 최우선.</p>
+            <p class="supp-verdict">다이어트 중 가장 중요한 영양제. 칼로리를 줄여도 단백질은 줄이면 안 됩니다. 근손실 없이 체지방만 빼려면 단백질이 최우선.</p>
             <a class="supp-link" href="https://www.iherb.com/c/whey-protein" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">카페인</span><span class="ais-badge ais-a">A</span></div>
-            <p class="supp-verdict">공복 유산소 전 카페인은 지방 연소 효율을 높임. 아메리카노 1~2잔이면 충분. 물 충분히 마시세요.</p>
+            <p class="supp-verdict">공복 유산소 전 카페인은 지방 연소 효율을 높입니다. 아메리카노 1~2잔으로 충분. 단, 수분도 충분히 마셔야 합니다.</p>
             <span class="supp-skip">☕ 커피로 충분</span>
           </div>
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">마그네슘</span><span class="ais-badge ais-b">B</span></div>
-            <p class="supp-verdict">저칼로리 식단 중 미네랄 부족하기 쉬움. 수면 질 개선으로 코르티솔(스트레스 호르몬) 억제 → 체지방 관리에 간접 도움.</p>
+            <p class="supp-verdict">저칼로리 식단 중 미네랄이 부족해지기 쉬움. 수면 질 개선으로 코르티솔(스트레스 호르몬)을 억제해 체지방 관리에 간접적으로 도움.</p>
             <a class="supp-link" href="https://www.iherb.com/c/magnesium" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
         </div>
       </div>
 
+      <!-- 유지 -->
       <div id="supp-maintain" class="goal-content">
-        <div class="answer-box" style="margin-bottom:16px;">⚖️ <strong>유지어터 우선순위:</strong> 크레아틴 + 비타민 D + 마그네슘이면 충분. 더 이상 추가할 필요 없어요.</div>
+        <div class="answer-box" style="margin-bottom:16px;">⚖️ <strong>유지어터 우선순위:</strong> 크레아틴 + 비타민 D + 마그네슘이면 충분합니다. 더 추가할 필요 없어요.</div>
         <div class="supp-grid">
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">크레아틴</span><span class="ais-badge ais-a">A</span></div>
-            <p class="supp-verdict">유지 기간에도 지속 복용. 근력 유지와 운동 퀄리티를 지키는 데 가장 효율적.</p>
+            <p class="supp-verdict">유지 기간에도 꾸준히 복용하면 됩니다. 근력 유지와 운동 퀄리티를 지키는 데 가장 효율적인 영양제.</p>
             <a class="supp-link" href="https://www.iherb.com/c/creatine" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
           <div class="supp-card">
             <div class="supp-header"><span class="supp-name">비타민 D + 마그네슘</span><span class="ais-badge ais-b">B</span></div>
-            <p class="supp-verdict">장기 건강 유지. 비타민 D는 겨울·실내 위주 생활자에게 특히 중요. 마그네슘은 수면 질 관리.</p>
+            <p class="supp-verdict">장기 건강 유지. 비타민 D는 실내 생활이 많은 경우 특히 중요. 마그네슘은 수면 질 관리에 도움.</p>
             <a class="supp-link" href="https://www.iherb.com/c/vitamin-d" target="_blank" rel="noopener sponsored">🛒 아이허브</a>
           </div>
         </div>
       </div>
 
-      <div class="notice-box">⚠️ 아이허브 링크는 제휴 링크입니다. 구매 시 사이트 운영에 도움이 됩니다. 성분 기준으로만 선정, 광고비 없습니다.</div>
+      <div class="notice-box">⚠️ 아이허브 링크는 제휴 링크입니다. 구매 시 사이트 운영에 도움이 됩니다. 성분 기준으로만 선정했으며 광고비는 없습니다.</div>
     </div>
   </section>
 
@@ -256,25 +253,39 @@
         <p class="section-sub">칼로리 계산보다 혈당 조절이 먼저입니다.</p>
       </div>
       <div class="answer-box" style="margin-bottom:20px;">
-        혈당이 급격히 오르면 인슐린이 분비되고, 인슐린이 높으면 <strong>지방 분해가 멈춥니다.</strong> 먹는 양보다 먹는 종류와 순서가 중요한 이유입니다.
+        혈당이 급격히 오르면 인슐린이 분비되고, <strong>인슐린이 높은 동안 지방 분해가 멈춥니다.</strong> 먹는 양보다 먹는 순서와 종류가 중요한 이유입니다.
       </div>
 
-      <div class="supp-grid">
-        <div class="supp-card">
-          <p class="supp-name" style="margin-bottom:8px;">🥦 채소 → 단백질 → 탄수 순서</p>
-          <p class="supp-verdict">식사 순서만 바꿔도 혈당 상승 속도가 크게 줄어듭니다. 야채·고기 먼저, 밥은 마지막에.</p>
+      <div class="info-grid">
+        <div class="info-card">
+          <span class="info-icon">🥦</span>
+          <div class="info-title">채소 → 단백질 → 탄수 순서로 먹기</div>
+          <p class="info-desc">식사 순서만 바꿔도 같은 음식에서 혈당 상승 속도가 크게 줄어듭니다. 야채·고기 먼저, 밥은 마지막에.</p>
         </div>
-        <div class="supp-card">
-          <p class="supp-name" style="margin-bottom:8px;">🚶 식후 10분 걷기</p>
-          <p class="supp-verdict">밥 먹고 바로 앉지 마세요. 10분만 걸어도 근육이 혈당을 흡수해서 인슐린 스파이크를 억제합니다.</p>
+        <div class="info-card">
+          <span class="info-icon">🚶</span>
+          <div class="info-title">식후 10분 걷기</div>
+          <p class="info-desc">밥 먹고 바로 앉지 마세요. 10분만 걸어도 근육이 혈당을 흡수해 인슐린 스파이크를 크게 억제합니다.</p>
         </div>
-        <div class="supp-card">
-          <p class="supp-name" style="margin-bottom:8px;">☕ 생크림 커피 vs 카페라떼</p>
-          <p class="supp-verdict">라떼 우유에는 유당(당류 9g)이 있어 혈당을 올림. 드립커피에 생크림 10~20g을 타면 당류가 거의 0g. 식곤증 예방에 효과적.</p>
+        <div class="info-card">
+          <span class="info-icon">🍽️</span>
+          <div class="info-title">단백질·지방과 함께 먹기</div>
+          <p class="info-desc">탄수화물을 단백질·지방과 함께 먹으면 소화 속도가 느려져 혈당이 완만하게 올라갑니다. 밥만 단독으로 먹는 것을 피하세요.</p>
         </div>
-        <div class="supp-card">
-          <p class="supp-name" style="margin-bottom:8px;">🍎 저당 간식 선택</p>
-          <p class="supp-verdict">스테비아 토마토, 라라스윗·스키니피그 저당 아이스크림(당류 2~3g), 무가당 그릭요거트+견과류 조합으로 혈당 걱정 없이 간식 가능.</p>
+        <div class="info-card">
+          <span class="info-icon">🍬</span>
+          <div class="info-title">당류 음료 줄이기</div>
+          <p class="info-desc">음료는 혈당을 가장 빠르게 올리는 경로입니다. 주스·에너지음료·달달한 커피 대신 물, 아메리카노, 무가당 음료를 선택하세요.</p>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">😴</span>
+          <div class="info-title">수면 부족 = 혈당 조절 악화</div>
+          <p class="info-desc">수면이 부족하면 코르티솔이 올라가 혈당 조절 능력이 떨어집니다. 식단을 잘 지켜도 수면이 부족하면 체지방이 잘 빠지지 않아요.</p>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">💪</span>
+          <div class="info-title">근육량이 혈당 조절 능력</div>
+          <p class="info-desc">근육이 많을수록 혈당을 흡수하는 용량이 커집니다. 웨이트 트레이닝이 혈당 관리에 직접적으로 도움이 되는 이유입니다.</p>
         </div>
       </div>
     </div>
@@ -289,7 +300,7 @@
         <p class="section-sub">밀가루가 문제지, 탄수화물 전체가 적이 아닙니다.</p>
       </div>
       <div class="answer-box" style="margin-bottom:16px;">
-        정제 탄수화물(흰 밀가루)은 혈당을 폭발시키지만, 복합 탄수화물(현미·듀럼밀·메밀)은 천천히 올려 에너지를 안정적으로 공급합니다.
+        정제 탄수화물(흰 밀가루)은 혈당을 급격히 올리지만, 복합 탄수화물(현미·듀럼밀·메밀)은 소화가 느려 혈당을 안정적으로 유지하고 에너지를 오래 공급합니다.
       </div>
 
       <table class="carb-table">
@@ -297,26 +308,109 @@
           <tr><th>식품</th><th>평가</th><th>이유</th></tr>
         </thead>
         <tbody>
-          <tr><td>현미밥 · 귀리</td><td class="ok">✅ 추천</td><td>식이섬유 풍부, 혈당 완만 상승</td></tr>
-          <tr><td>듀럼밀 파스타</td><td class="ok">✅ 추천</td><td>GI 낮음, 단백질 100g당 12~14g</td></tr>
-          <tr><td>메밀 (막국수·소바)</td><td class="ok">✅ 추천</td><td>GI 낮음, 글루텐 적음</td></tr>
-          <tr><td>호밀빵 · 사워도우</td><td class="ok">✅ 추천</td><td>자연 발효, GI 낮음</td></tr>
-          <tr><td>쌀국수면</td><td class="caution">⚠️ 양 조절</td><td>지방 0, 글루텐 없음. 면 반만 + 숙주 채우기</td></tr>
-          <tr><td>흰쌀밥</td><td class="caution">⚠️ 조절 필요</td><td>GI 높음. 채소·단백질과 함께 먹으면 완화</td></tr>
-          <tr><td>칼국수 · 수제비 · 우동</td><td class="bad">❌ 비추</td><td>정제 밀가루. 국물까지 전분이 녹아 혈당 폭발</td></tr>
-          <tr><td>흰 식빵 · 크루아상</td><td class="bad">❌ 비추</td><td>당류 높고 식이섬유 없음</td></tr>
+          <tr><td>현미밥 · 귀리</td><td class="ok">✅ 추천</td><td>식이섬유 풍부, 혈당 완만하게 상승, 포만감 오래 지속</td></tr>
+          <tr><td>듀럼밀 파스타</td><td class="ok">✅ 추천</td><td>GI 낮음, 100g당 단백질 12~14g — 의외로 좋은 선택</td></tr>
+          <tr><td>메밀 (막국수·소바)</td><td class="ok">✅ 추천</td><td>GI 낮음, 글루텐 적음, 단백질 함량도 높은 편</td></tr>
+          <tr><td>호밀빵 · 사워도우</td><td class="ok">✅ 추천</td><td>자연 발효, GI 낮음, 일반 식빵보다 식이섬유 풍부</td></tr>
+          <tr><td>쌀국수면</td><td class="caution">⚠️ 양 조절</td><td>지방 0, 글루텐 없음. 면 양 줄이고 채소 늘리면 괜찮음</td></tr>
+          <tr><td>흰쌀밥</td><td class="caution">⚠️ 조절 필요</td><td>GI 높지만 채소·단백질과 함께 먹으면 영향이 줄어듦</td></tr>
+          <tr><td>칼국수 · 수제비 · 우동</td><td class="bad">❌ 비추</td><td>정제 밀가루, 국물까지 전분이 녹아 혈당 급상승</td></tr>
+          <tr><td>흰 식빵 · 크루아상</td><td class="bad">❌ 비추</td><td>식이섬유 없고 당류 높음, 포만감도 금방 사라짐</td></tr>
+          <tr><td>라면</td><td class="bad">❌ 비추</td><td>튀긴 면 + 나트륨 폭탄. 가끔은 괜찮지만 주식으로는 부적합</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
 
-  <!-- ④ 섭취 타이밍 -->
-  <section class="section section-alt" id="timing">
+  <!-- ④ 단백질 -->
+  <section class="section section-alt" id="protein">
+    <div class="inner">
+      <div class="section-head">
+        <h2 class="section-title">단백질 식품 고르는 법</h2>
+        <p class="section-sub">비싼 영양제보다 식품으로 채우는 게 먼저입니다.</p>
+      </div>
+
+      <div class="goal-tabs">
+        <button class="goal-tab active" onclick="switchGoal('protein','all')">전체</button>
+        <button class="goal-tab" onclick="switchGoal('protein','bulk')">💪 벌크업</button>
+        <button class="goal-tab" onclick="switchGoal('protein','cut')">🔥 다이어트</button>
+      </div>
+
+      <div id="protein-all" class="goal-content active">
+        <div class="supp-grid">
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">닭가슴살 · 닭다리살</span></div>
+            <p class="supp-verdict">가장 대중적인 고단백 식품. 닭가슴살은 지방이 거의 없고, 닭다리살은 지방이 약간 있어 촉촉해서 식단 지속하기 더 쉽습니다.</p>
+          </div>
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">소고기 (우둔살·홍두깨)</span></div>
+            <p class="supp-verdict">지방이 거의 없는 순수 단백질 부위. 크레아틴과 철분이 풍부해 운동 수행 능력 유지에 특히 좋습니다.</p>
+          </div>
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">돼지 앞다리살 · 목전지</span></div>
+            <p class="supp-verdict">삼겹살보다 지방이 절반 이하. 가성비가 좋고 볶음·수육 모두 활용 가능. 가장 현실적인 단백질 식품.</p>
+          </div>
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">계란</span></div>
+            <p class="supp-verdict">노른자 포함해서 드세요. 완전식품으로 가장 접근하기 쉬운 단백질. 1개당 단백질 약 6g, 지용성 비타민도 풍부합니다.</p>
+          </div>
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">생선 (흰살·등 푸른)</span></div>
+            <p class="supp-verdict">흰살생선은 지방이 거의 없는 고단백. 고등어·연어 등 등 푸른 생선은 오메가3까지 보충 가능.</p>
+          </div>
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">그릭요거트 · 코티지치즈</span></div>
+            <p class="supp-verdict">무가당 제품 기준 100g당 단백질 10g 내외. 카제인 단백질이라 소화가 느려 취침 전 단백질 보충에도 적합.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="protein-bulk" class="goal-content">
+        <div class="answer-box" style="margin-bottom:16px;">💪 벌크업 중에는 지방이 어느 정도 있어도 괜찮습니다. 칼로리를 충분히 채우는 게 목표이므로 지방 부위도 활용하세요.</div>
+        <div class="supp-grid">
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">소고기 (척아이롤·부챗살)</span></div>
+            <p class="supp-verdict">적당한 마블링이 있어 칼로리도 충분히 채워짐. 단백질 밀도 높고 철분·크레아틴 풍부. 벌크업 시 주 2~3회 권장.</p>
+          </div>
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">삼겹살 · 목살</span></div>
+            <p class="supp-verdict">벌크업 중에는 지방도 에너지원. 단백질과 함께 칼로리를 채우기 좋음. 단, 나트륨 높은 양념은 피하세요.</p>
+          </div>
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">계란 (여러 개)</span></div>
+            <p class="supp-verdict">벌크업 시 하루 3~5개도 무방. 노른자의 콜레스테롤이 테스토스테론 합성을 돕는다는 연구도 있습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="protein-cut" class="goal-content">
+        <div class="answer-box" style="margin-bottom:16px;">🔥 다이어트 중에는 저지방 고단백 부위를 선택해 칼로리는 낮추되 단백질은 유지하세요.</div>
+        <div class="supp-grid">
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">닭가슴살 · 닭안심</span></div>
+            <p class="supp-verdict">100g당 단백질 22~25g, 칼로리 110~130kcal. 다이어트 식품의 대명사. 퍽퍽하면 수비드나 양념 활용.</p>
+          </div>
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">소 우둔살 · 홍두깨살</span></div>
+            <p class="supp-verdict">지방이 거의 없는 소고기 부위. 닭가슴살에 질릴 때 최고의 대안. 얇게 슬라이스해서 볶음으로 활용.</p>
+          </div>
+          <div class="supp-card">
+            <div class="supp-header"><span class="supp-name">흰살생선 · 새우 · 오징어</span></div>
+            <p class="supp-verdict">지방 거의 없고 단백질 풍부. 포화지방 걱정 없이 단백질 채우기 좋은 식품군.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ⑤ 섭취 타이밍 -->
+  <section class="section" id="timing">
     <div class="inner">
       <div class="section-head">
         <h2 class="section-title">운동 전후 뭘 먹어야 하나요?</h2>
-        <p class="section-sub">하루 총 섭취량이 제일 중요하고, 타이밍은 그 다음입니다.</p>
+        <p class="section-sub">하루 총 섭취량이 타이밍보다 훨씬 중요합니다. 타이밍은 여유가 생기면 신경 쓰세요.</p>
       </div>
 
       <div class="goal-tabs">
@@ -327,47 +421,73 @@
 
       <div id="timing-bulk" class="goal-content active">
         <ul class="timing-list">
-          <li class="timing-item"><span class="timing-when">운동 1~2시간 전</span><span class="timing-what"><strong>탄수화물 + 단백질.</strong> 현미밥 반 공기 + 닭가슴살, 또는 바나나 + 그릭요거트. 에너지를 채워야 운동 강도를 높일 수 있습니다.</span></li>
-          <li class="timing-item"><span class="timing-when">운동 직후</span><span class="timing-what"><strong>단백질 + 탄수화물 빠르게.</strong> 유청 단백질 쉐이크 + 바나나가 가장 빠른 조합. 이 타이밍에 근합성이 가장 활발합니다.</span></li>
-          <li class="timing-item"><span class="timing-when">취침 전</span><span class="timing-what"><strong>카제인 단백질 or 그릭요거트.</strong> 천천히 흡수되어 수면 중 근합성 유지. 마그네슘 같이 복용하면 수면 질도 올라갑니다.</span></li>
+          <li class="timing-item">
+            <span class="timing-when">운동 1~2시간 전</span>
+            <span class="timing-what"><strong>탄수화물 + 단백질.</strong> 현미밥 반 공기 + 닭가슴살 or 바나나 + 그릭요거트. 에너지를 채워야 운동 강도를 높일 수 있습니다.</span>
+          </li>
+          <li class="timing-item">
+            <span class="timing-when">운동 직후</span>
+            <span class="timing-what"><strong>단백질 + 탄수화물 빠르게.</strong> 유청 단백질 쉐이크 + 바나나가 가장 빠른 조합. 이 타이밍에 근합성이 가장 활발합니다.</span>
+          </li>
+          <li class="timing-item">
+            <span class="timing-when">취침 전</span>
+            <span class="timing-what"><strong>카제인 단백질 or 그릭요거트.</strong> 천천히 흡수되어 수면 중 근합성을 유지. 마그네슘을 같이 복용하면 수면 질도 올라갑니다.</span>
+          </li>
         </ul>
       </div>
 
       <div id="timing-cut" class="goal-content">
         <ul class="timing-list">
-          <li class="timing-item"><span class="timing-when">공복 유산소 전</span><span class="timing-what"><strong>물 한 잔만.</strong> 공복 상태에서 뛰면 체지방 연소 효율이 높습니다. 뭔가 먹으면 위장이 출렁여 옆구리가 아프기도 해요.</span></li>
-          <li class="timing-item"><span class="timing-when">운동 30분 전</span><span class="timing-what"><strong>카페인(아메리카노).</strong> 지방 연소 효율을 높이고 퍼포먼스 향상. 탄수화물은 최소화.</span></li>
-          <li class="timing-item"><span class="timing-when">운동 직후</span><span class="timing-what"><strong>단백질 우선.</strong> 근손실 방지가 최우선. 유청 단백질 쉐이크 or 닭가슴살. 탄수화물은 소량만.</span></li>
-          <li class="timing-item"><span class="timing-when">취침 전</span><span class="timing-what"><strong>그릭요거트(무가당) or 카제인.</strong> 칼로리 낮게, 단백질은 채우기. 마그네슘 복용하면 수면·코르티솔 관리에 도움.</span></li>
+          <li class="timing-item">
+            <span class="timing-when">공복 유산소 전</span>
+            <span class="timing-what"><strong>물만 마시고 출발.</strong> 공복에 유산소를 하면 체지방 연소 효율이 높습니다. 뭔가 먹으면 위장이 불편하고 지방보다 음식 칼로리를 먼저 태웁니다.</span>
+          </li>
+          <li class="timing-item">
+            <span class="timing-when">운동 30분 전</span>
+            <span class="timing-what"><strong>카페인(아메리카노).</strong> 지방 연소 효율을 높이고 퍼포먼스를 향상시킵니다. 탄수화물은 최소화.</span>
+          </li>
+          <li class="timing-item">
+            <span class="timing-when">운동 직후</span>
+            <span class="timing-what"><strong>단백질 우선.</strong> 근손실 방지가 최우선. 유청 단백질 or 닭가슴살. 탄수화물은 소량만 — 혈당을 과도하게 올릴 필요 없습니다.</span>
+          </li>
+          <li class="timing-item">
+            <span class="timing-when">취침 전</span>
+            <span class="timing-what"><strong>무가당 그릭요거트 or 카제인.</strong> 칼로리는 낮게, 단백질은 채우기. 마그네슘 복용하면 수면과 코르티솔 관리에 도움.</span>
+          </li>
         </ul>
       </div>
 
       <div id="timing-maintain" class="goal-content">
         <ul class="timing-list">
-          <li class="timing-item"><span class="timing-when">운동 전</span><span class="timing-what"><strong>평소 식사로 충분.</strong> 특별히 추가할 필요 없음. 카페인(커피)으로 집중력 올리는 정도.</span></li>
-          <li class="timing-item"><span class="timing-when">운동 직후</span><span class="timing-what"><strong>단백질 20~30g.</strong> 음식으로 채우기 어려우면 단백질 보충제 활용. 탄수화물은 일반 식사로.</span></li>
+          <li class="timing-item">
+            <span class="timing-when">운동 전</span>
+            <span class="timing-what"><strong>평소 식사로 충분.</strong> 특별히 추가할 것 없습니다. 카페인(커피)으로 집중력을 올리는 정도면 OK.</span>
+          </li>
+          <li class="timing-item">
+            <span class="timing-when">운동 직후</span>
+            <span class="timing-what"><strong>단백질 20~30g.</strong> 음식으로 채우기 어려우면 단백질 보충제 활용. 탄수화물은 일반 식사로 해결.</span>
+          </li>
         </ul>
       </div>
     </div>
   </section>
 
 
-  <!-- ⑤ 외식 가이드 -->
-  <section class="section" id="eat-out">
+  <!-- ⑥ 외식 가이드 -->
+  <section class="section section-alt" id="eat-out">
     <div class="inner">
       <div class="section-head">
         <h2 class="section-title">외식 가이드</h2>
-        <p class="section-sub">목표별로, 음식 종류별로 골라보세요.</p>
+        <p class="section-sub">목표별, 음식 종류별로 골라보세요.</p>
       </div>
 
-      <!-- 목표 탭 -->
       <div class="goal-tabs">
         <button class="goal-tab active" onclick="switchGoal('eat','bulk')">💪 벌크업</button>
         <button class="goal-tab" onclick="switchGoal('eat','cut')">🔥 다이어트</button>
         <button class="goal-tab" onclick="switchGoal('eat','maintain')">⚖️ 유지</button>
       </div>
 
-      <!-- 벌크업 외식 -->
+      <!-- 벌크업 -->
       <div id="eat-bulk" class="goal-content active">
         <p style="font-size:13px;color:var(--gray-600);margin-bottom:12px;">칼로리를 충분히 채우되 단백질 비율을 높이는 게 목표입니다.</p>
         <div class="eat-subtabs">
@@ -377,31 +497,31 @@
         </div>
         <div id="bulk-korean" class="eat-panel active">
           <div class="eat-grid">
-            <div class="eat-card"><div class="eat-title">✅ 보쌈·수육</div><p class="eat-tip">삶아서 기름 빠진 돼지고기. 쌈 채소와 함께 먹으면 식이섬유도 보충. 밥을 넉넉히 곁들여 칼로리 채우기.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 제육볶음 정식</div><p class="eat-tip">단백질+탄수화물 밸런스 좋음. 반찬으로 나오는 나물류도 훌륭한 미량 영양소 공급원.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 보쌈·수육 정식</div><p class="eat-tip">삶아서 기름 뺀 돼지고기. 쌈채소와 함께 식이섬유도 보충. 밥 넉넉히 곁들여 칼로리 채우기 좋음.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 제육볶음 정식</div><p class="eat-tip">단백질 + 탄수화물 밸런스 좋음. 반찬으로 나오는 나물류도 훌륭한 미량 영양소 공급원.</p></div>
             <div class="eat-card"><div class="eat-title">✅ 삼겹살 구이</div><p class="eat-tip">벌크업 중에는 지방도 칼로리 공급원. 상추 쌈으로 채소 보충하고 공깃밥 한 그릇 더.</p></div>
-            <div class="eat-card"><div class="eat-title">⚠️ 순두부·찌개류</div><p class="eat-tip">단백질은 있지만 나트륨 높아 부기 유발. 국물은 적당히, 건더기 위주로.</p></div>
+            <div class="eat-card"><div class="eat-title">⚠️ 찌개·국밥류</div><p class="eat-tip">단백질은 충분하지만 나트륨이 높아 부기를 유발할 수 있음. 국물보다 건더기 위주로.</p></div>
           </div>
         </div>
         <div id="bulk-western" class="eat-panel">
           <div class="eat-grid">
-            <div class="eat-card"><div class="eat-title">✅ 와퍼 오리지널</div><p class="eat-tip">단백질 30g+. 벌크업 중 단품으로도 훌륭. 감자튀김 추가해서 칼로리 채우기.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 파스타 (토마토·라구)</div><p class="eat-tip">듀럼밀 면은 좋은 탄수화물. 소고기 라구 소스면 단백질도 보충. 벌크업 시 크림 소스도 OK.</p></div>
             <div class="eat-card"><div class="eat-title">✅ 스테이크</div><p class="eat-tip">단백질 밀도 최고. 감자나 빵 사이드를 더해 칼로리 채우기. 소스는 마음껏.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 파스타 (토마토·라구·크림)</div><p class="eat-tip">듀럼밀 면은 좋은 탄수화물. 소고기 라구 소스면 단백질도 보충. 벌크업 시 크림 소스도 OK.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 버거 (소고기 패티)</div><p class="eat-tip">구운 소고기 패티로 단백질 충분히. 감자튀김과 함께 먹으면 칼로리도 채워짐.</p></div>
           </div>
         </div>
         <div id="bulk-asian" class="eat-panel">
           <div class="eat-grid">
-            <div class="eat-card"><div class="eat-title">✅ 쌀국수 (대사이즈)</div><p class="eat-tip">면+고기+숙주 조합으로 탄단지 밸런스 좋음. 벌크업 시 면을 넉넉히.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 찜닭</div><p class="eat-tip">닭고기 단백질 풍부. 당면까지 먹으면 탄수화물도 채워짐. 칼로리 면에서 벌크업 최적.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 초밥·사시미</div><p class="eat-tip">생선 단백질+밥 탄수. 여러 가지 생선으로 미량 영양소도 다양하게.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 쌀국수 (대사이즈)</div><p class="eat-tip">면 + 고기 + 숙주 조합으로 탄단지 밸런스 좋음. 벌크업 시 면을 넉넉히.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 찜닭</div><p class="eat-tip">닭고기 단백질 풍부. 당면까지 먹으면 탄수화물도 채워짐.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 초밥·사시미</div><p class="eat-tip">생선 단백질 + 밥 탄수화물. 여러 생선으로 다양한 영양소 섭취 가능.</p></div>
           </div>
         </div>
       </div>
 
-      <!-- 다이어트 외식 -->
+      <!-- 다이어트 -->
       <div id="eat-cut" class="goal-content">
-        <p style="font-size:13px;color:var(--gray-600);margin-bottom:12px;">단백질은 유지, 정제 탄수화물과 나트륨을 줄이는 게 목표입니다.</p>
+        <p style="font-size:13px;color:var(--gray-600);margin-bottom:12px;">단백질은 유지하고, 정제 탄수화물과 나트륨을 줄이는 게 핵심입니다.</p>
         <div class="eat-subtabs">
           <button class="eat-subtab active" onclick="switchEat('cut','korean')">한식</button>
           <button class="eat-subtab" onclick="switchEat('cut','western')">양식·패스트푸드</button>
@@ -410,54 +530,48 @@
         </div>
         <div id="cut-korean" class="eat-panel active">
           <div class="eat-grid">
-            <div class="eat-card"><div class="eat-title">✅ 메밀 막국수</div><p class="eat-tip">GI 낮은 복합탄수화물. 양념장 반만 넣고 편육과 함께. 물막국수가 더 안전.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 목살·앞다리살 구이</div><p class="eat-tip">삼겹살보다 지방 절반. 상추 쌈 먹으면서 밥은 반 공기만. 나오는 기름은 키친타월로.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 육회·광어회</div><p class="eat-tip">지방 거의 없는 순수 단백질. 와사비 간장으로, 초장은 당류 높아서 최소화.</p></div>
-            <div class="eat-card"><div class="eat-title">❌ 칼국수·수제비</div><p class="eat-tip">국물까지 전분 녹아 탄수화물 폭탄. 소바나 메밀국수로 바꾸세요.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 메밀 막국수·냉면</div><p class="eat-tip">GI 낮은 복합탄수화물. 양념은 반만 넣고 수육과 함께. 물냉면이 비빔보다 당류가 적음.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 앞다리·목살 구이</div><p class="eat-tip">삼겹살보다 지방 절반. 쌈채소 먹으면서 밥은 반 공기만. 구우면서 나오는 기름은 닦아내기.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 회·조개찜</div><p class="eat-tip">지방 거의 없는 순수 단백질. 초장보다 간장 와사비로 먹으면 당류 낮아짐.</p></div>
+            <div class="eat-card"><div class="eat-title">❌ 칼국수·수제비·우동</div><p class="eat-tip">정제 밀가루, 국물에도 전분이 녹아 혈당 급상승. 같은 가게에 소바가 있으면 바꾸세요.</p></div>
           </div>
         </div>
         <div id="cut-western" class="eat-panel">
           <div class="eat-grid">
-            <div class="eat-card"><div class="eat-title">✅ 와퍼 주니어 (단품)</div><p class="eat-tip">구운 소고기 패티, 지방 절반. 번 하나 떼고 먹으면 탄수 반으로. 감자튀김 대신 제로콜라.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 알리오 올리오 · 봉골레</div><p class="eat-tip">듀럼밀 면 + 올리브오일 + 해산물. 크림·로제 소스 대신 선택. 면 양은 반으로 요청.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 그릴드 치킨 샐러드</div><p class="eat-tip">단백질+식이섬유 최고 조합. 드레싱은 오일 & 비네거로. 크루통은 빼도 됨.</p></div>
-            <div class="eat-card"><div class="eat-title">❌ 크림·로제 파스타</div><p class="eat-tip">면은 좋아도 크림 소스 한 그릇이 800~1,000kcal. 오일·토마토로 바꾸세요.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 버거 단품 (소고기 패티)</div><p class="eat-tip">구운 소고기 패티로 단백질 확보. 빵 한쪽 떼면 탄수화물이 반으로 줄어듦. 감자튀김 대신 제로 음료.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 파스타 (오일·토마토)</div><p class="eat-tip">듀럼밀 면 + 올리브오일 + 해산물 조합. 크림·로제 소스 대신 선택하면 칼로리가 크게 낮아짐.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 샐러드 + 단백질 토핑</div><p class="eat-tip">그릴드 치킨·연어·새우 토핑으로 단백질 확보. 드레싱은 오일&비네거 계열로.</p></div>
+            <div class="eat-card"><div class="eat-title">❌ 크림·로제 파스타</div><p class="eat-tip">면은 좋아도 크림 소스 한 그릇이 800~1,000kcal 넘기 쉬움. 오일·토마토 소스로 교체.</p></div>
           </div>
         </div>
         <div id="cut-asian" class="eat-panel">
           <div class="eat-grid">
-            <div class="eat-card"><div class="eat-title">✅ 쌀국수</div><p class="eat-tip">면 반만+숙주 많이. 해선장 소스 최소화. 국물 나트륨 주의.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 월남쌈</div><p class="eat-tip">라이스페이퍼 반 찢어서 싸기. 고기·새우·야채 위주, 땅콩 소스는 살짝만.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 야키토리 (소금구이)</div><p class="eat-tip">닭특수부위 탄수화물 0. 타레 소스 대신 시오(소금) 주문.</p></div>
-            <div class="eat-card"><div class="eat-title">❌ 사누키 우동</div><p class="eat-tip">압축된 정제 밀가루. 식이섬유·단백질 없이 혈당만 올림. 같은 집 소바로 바꾸세요.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 쌀국수</div><p class="eat-tip">면 반 + 숙주 많이. 소스 당류 주의. 국물 나트륨 높으니 건더기 위주로.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 월남쌈</div><p class="eat-tip">라이스페이퍼 반만 써서 싸기. 고기·새우·채소 위주, 땅콩 소스는 소량만.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 닭꼬치 구이 (소금)</div><p class="eat-tip">닭 특수부위 탄수화물 0. 달달한 타레 소스 대신 소금(시오) 구이로 주문.</p></div>
+            <div class="eat-card"><div class="eat-title">❌ 우동·라멘</div><p class="eat-tip">정제 밀가루 면. 같은 가게라면 소바·쌀국수로 교체하세요.</p></div>
           </div>
         </div>
         <div id="cut-alcohol" class="eat-panel">
           <div class="eat-grid">
-            <div class="eat-card"><div class="eat-title">✅ 위스키 하이볼 (탄산수)</div><p class="eat-tip">당질 0. 토닉워터 대신 탄산수 요청. 증류주는 당질이 없어서 혈당 영향 없음.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 드라이 레드 와인</div><p class="eat-tip">Brut 표시 = 당도 낮음. 한두 잔 수준이면 다이어트에 큰 영향 없음.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 안주: 육회·꼬치·회</div><p class="eat-tip">탄수화물 없는 단백질 안주. 튀김·전류·떡볶이는 피하기.</p></div>
-            <div class="eat-card"><div class="eat-title">❌ 맥주·막걸리</div><p class="eat-tip">액상 탄수화물 + 알코올. 지방 연소를 즉시 중단시킴.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 증류주 (위스키·소주)</div><p class="eat-tip">당질 0. 위스키는 탄산수에 타서 하이볼로. 증류식 소주도 당류 없음. 술 자체는 당질 걱정 없지만 알코올이 지방 연소를 멈춤.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 드라이 와인</div><p class="eat-tip">당도 낮은 드라이 레드·화이트 와인. 잔당이 적어 혈당 영향 최소화.</p></div>
+            <div class="eat-card"><div class="eat-title">✅ 안주: 회·육회·꼬치</div><p class="eat-tip">탄수화물 없는 단백질 안주. 튀김·전류·달달한 양념 안주는 피하기.</p></div>
+            <div class="eat-card"><div class="eat-title">❌ 맥주·막걸리·소주+삼겹</div><p class="eat-tip">맥주·막걸리는 액상 탄수화물. 알코올이 지방 연소를 멈춘 상태에서 들어온 음식은 모두 지방으로 저장됨.</p></div>
           </div>
         </div>
       </div>
 
-      <!-- 유지 외식 -->
+      <!-- 유지 -->
       <div id="eat-maintain" class="goal-content">
-        <p style="font-size:13px;color:var(--gray-600);margin-bottom:12px;">과식만 안 하면 됩니다. 단백질 챙기고 정제 탄수는 적당히.</p>
-        <div class="eat-subtabs">
-          <button class="eat-subtab active" onclick="switchEat('maintain','all')">전체 보기</button>
-        </div>
-        <div id="maintain-all" class="eat-panel active">
-          <div class="eat-grid">
-            <div class="eat-card"><div class="eat-title">✅ 뭐든 단백질 먼저</div><p class="eat-tip">어떤 음식이든 고기·생선·계란을 먼저 먹고, 밥·면·빵은 나중에. 이 순서만 지켜도 혈당 관리가 됩니다.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 파스타 · 쌀국수 · 막국수</div><p class="eat-tip">복합탄수화물 위주 면 요리는 유지어터에게 편하게 즐길 수 있는 외식.</p></div>
-            <div class="eat-card"><div class="eat-title">✅ 삼겹살도 가끔은 OK</div><p class="eat-tip">유지 기간엔 가끔 먹어도 상관없음. 상추 쌈으로 채소 보충하고 밥 양만 조절.</p></div>
-            <div class="eat-card"><div class="eat-title">⚠️ 자주 먹으면 주의</div><p class="eat-tip">칼국수·우동·크림파스타는 자주 먹으면 체중이 서서히 올라갈 수 있음. 주 1~2회 이하로.</p></div>
-          </div>
+        <p style="font-size:13px;color:var(--gray-600);margin-bottom:12px;">과식만 안 하면 됩니다. 단백질 챙기고 정제 탄수화물은 적당히.</p>
+        <div class="eat-grid">
+          <div class="eat-card"><div class="eat-title">✅ 단백질 먼저 먹기</div><p class="eat-tip">어떤 음식이든 고기·생선·계란을 먼저 먹고, 밥·면·빵은 나중에. 이 순서만 지켜도 혈당 관리가 됩니다.</p></div>
+          <div class="eat-card"><div class="eat-title">✅ 복합탄수 위주로</div><p class="eat-tip">파스타·쌀국수·막국수는 유지어터에게 편하게 즐길 수 있는 외식입니다.</p></div>
+          <div class="eat-card"><div class="eat-title">✅ 삼겹살도 가끔은 OK</div><p class="eat-tip">유지 기간에는 가끔 먹어도 상관없음. 채소 보충하고 밥 양만 조절.</p></div>
+          <div class="eat-card"><div class="eat-title">⚠️ 자주 먹으면 주의</div><p class="eat-tip">칼국수·우동·크림파스타는 자주 먹으면 서서히 체중이 올라갈 수 있음. 주 1~2회 이하로.</p></div>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -472,36 +586,33 @@
   <script src="../js/main.js"></script>
   <script>
     function switchGoal(section, goal) {
-      // 해당 섹션의 모든 탭·콘텐츠 비활성
-      const tabs = document.querySelectorAll(`#${section}-${goal}`);
-      // 같은 prefix 찾기
       document.querySelectorAll(`[id^="${section}-"]`).forEach(el => {
         el.classList.remove('active');
       });
       const target = document.getElementById(`${section}-${goal}`);
       if (target) target.classList.add('active');
 
-      // 버튼 active 처리 — 부모 goal-tabs 안에서
       if (target) {
-        const parentSection = target.closest('section') || target.closest('.inner');
-        parentSection && parentSection.querySelectorAll('.goal-tab').forEach(btn => {
-          btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${goal}'`));
-        });
+        const parentEl = target.closest('.section') || target.closest('.inner');
+        if (parentEl) {
+          parentEl.querySelectorAll('.goal-tab').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${goal}'`));
+          });
+        }
       }
     }
 
     function switchEat(goal, sub) {
-      // 해당 goal의 모든 패널 숨기기
       document.querySelectorAll(`[id^="${goal}-"]`).forEach(el => {
         if (el.classList.contains('eat-panel')) el.classList.remove('active');
       });
       const target = document.getElementById(`${goal}-${sub}`);
       if (target) target.classList.add('active');
 
-      // subtab 버튼 active
-      const btn = event && event.target;
-      if (btn) {
-        btn.closest('.eat-subtabs') && btn.closest('.eat-subtabs').querySelectorAll('.eat-subtab').forEach(b => b.classList.remove('active'));
+      if (event && event.target) {
+        const btn = event.target;
+        const subtabs = btn.closest('.eat-subtabs');
+        if (subtabs) subtabs.querySelectorAll('.eat-subtab').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
       }
     }
